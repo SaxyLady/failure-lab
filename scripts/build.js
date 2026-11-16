@@ -8,6 +8,7 @@ const outputDirectory = path.join(repositoryRoot, "dist");
 const requiredFiles = [
   "index.html",
   "about/index.html",
+  "home/index.html",
   "scenario/index.html",
   "styles.css",
   "src/app.js",

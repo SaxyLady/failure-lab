@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Failure Lab | Learn from distributed systems failures</title>
+    <meta name="description" content="A short, hands-on investigation into replication, network partitions, and stale reads.">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <main class="page landing-page">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand-link" href="../">Failure Lab</a>
+        <a href="../about/">About</a>
+      </nav>
+
+      <section class="landing-hero" aria-labelledby="landing-heading">
+        <p class="eyebrow">A hands-on learning lab</p>
+        <h1 id="landing-heading">Understand what fails—and why.</h1>
+        <p class="hero-copy">Investigate distributed-systems behavior in a short, guided browser exercise—no real outage or setup required.</p>
+        <a class="button-link" href="../">Start Scenario 01</a>
+        <p class="hero-meta">Beginner <span aria-hidden="true">·</span> 3-5 minutes <span aria-hidden="true">·</span> Runs in your browser</p>
+      </section>
+
+      <section class="panel landing-scenario" aria-labelledby="scenario-heading">
+        <div>
+          <p class="phase-label">Scenario 01</p>
+          <h2 id="scenario-heading">The Isolated Replica</h2>
+          <p>A customer reads from one replica after a network partition and a write. Predict what they will see, then follow the evidence.</p>
+        </div>
+        <a class="text-link" href="../">Enter the investigation <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="landing-points" aria-label="What you will explore">
+        <h2>One incident. A few important lessons.</h2>
+        <ul class="check-list">
+          <li><span aria-hidden="true">✓</span>Network partitions</li>
+          <li><span aria-hidden="true">✓</span>Replica consistency</li>
+          <li><span aria-hidden="true">✓</span>Local acknowledgements</li>
+          <li><span aria-hidden="true">✓</span>Stale reads</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>A simplified teaching model, not a guarantee about every database. <a href="../about/">About Failure Lab</a></p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -6,14 +6,14 @@ This is a teaching model, not a distributed database, a consensus protocol, or a
 
 ## Run locally
 
-Requires Node.js 18 or newer. No package installation or external service is needed.
+Requires Node.js 18 or newer; Node.js 24 is recommended and used by the deployment workflow. No package installation or external service is needed.
 
 ```sh
 npm test
 npm start
 ```
 
-Open <http://127.0.0.1:4173> for the landing page. Scenario 01 is at <http://127.0.0.1:4173/scenario/> and the project overview is at <http://127.0.0.1:4173/about/>. The local server binds only to the loopback interface.
+Open <http://127.0.0.1:4173/> for Scenario 01. The landing page is at <http://127.0.0.1:4173/home/> and the project overview is at <http://127.0.0.1:4173/about/>. The old `/scenario/` address redirects to the scenario start. The local server binds only to the loopback interface.
 
 ## Build for production
 
@@ -31,9 +31,9 @@ One-time repository setup:
 
 1. Open **Settings → Pages**.
 2. Set **Build and deployment → Source** to **GitHub Actions**.
-3. Push to `main` and wait for the **Deploy GitHub Pages** workflow to complete.
+3. Push to `main` and wait for the **Deploy GitHub Pages** workflow to complete. If an earlier run failed before Pages was enabled, open that run in **Actions** and select **Re-run jobs → Re-run all jobs**.
 
-The public project URL will be <https://saxylady.github.io/failure-lab/>. No deployment secret or package installation is required.
+The expected public project URL is <https://saxylady.github.io/failure-lab/> after a successful deployment. No deployment secret or package installation is required. If the **Configure GitHub Pages** step reports “Get Pages site failed” or “Not Found,” verify that Pages is enabled and its source is **GitHub Actions**, then rerun the workflow.
 
 The prediction and confidence are held only in page memory and do not affect the model. The app does not sign in users, make external network requests from the page, or persist learner data.
 
