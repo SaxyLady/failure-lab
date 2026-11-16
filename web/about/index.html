@@ -13,6 +13,7 @@
       <nav class="site-nav" aria-label="Main navigation">
         <a class="brand-link" href="../home/">Failure Lab</a>
         <a href="../">Scenario 01</a>
+        <a href="../retry-storm/">Scenario 02</a>
       </nav>
 
       <header class="page-header">
@@ -24,7 +25,7 @@
       <section class="panel about-section" aria-labelledby="purpose-heading">
         <p class="phase-label">The purpose</p>
         <h2 id="purpose-heading">Understand the “why,” not just the outcome.</h2>
-        <p>Scenario 01 follows a write across three replicas during a network partition. You make a prediction, inspect each event, and see why a direct read from the isolated replica returns its older value.</p>
+        <p>Scenario 01 follows a write across three replicas during a network partition. Scenario 02 follows retries joining a slow service's queue while the original requests remain pending. In each, you make a prediction, inspect each event, and see how the stated rules lead to the result.</p>
       </section>
 
       <section class="panel about-section" aria-labelledby="model-heading">
@@ -39,10 +40,17 @@
         <a href="../docs/SCENARIO.md">Read the complete scenario specification</a>
       </section>
 
+      <section class="panel about-section" aria-labelledby="retry-heading">
+        <p class="phase-label">Scenario 02</p>
+        <h2 id="retry-heading">A retry can add work, not replace it.</h2>
+        <p>This bounded exercise uses a FIFO queue and a fixed retry limit. A timeout does not cancel the original attempt, so retries can add load while the service is already falling behind.</p>
+        <p>Other services may cancel, deduplicate, back off, or handle retries differently. <a href="../docs/SCENARIO-02.md">Read the complete scenario specification</a>.</p>
+      </section>
+
       <section class="panel about-section" aria-labelledby="privacy-heading">
         <p class="phase-label">Simple by design</p>
         <h2 id="privacy-heading">No account. No saved learner data.</h2>
-        <p>The exercise runs in your browser. Predictions and confidence stay in page memory; the app has no sign-in, backend, telemetry, or external page requests.</p>
+        <p>The exercises run in your browser. Predictions and confidence stay in page memory; the app has no sign-in, backend, telemetry, or external page requests.</p>
       </section>
 
       <a class="button-link" href="../">Start Scenario 01</a>

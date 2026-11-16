@@ -1,8 +1,8 @@
 # Failure Lab
 
-A static learning site for investigating distributed-systems failures. Scenario 01 is a deterministic browser exercise: C is isolated, A accepts a write, and a direct read from C returns its old value.
+A static learning site for investigating distributed-systems failures. Scenario 01 is a deterministic browser exercise: C is isolated, A accepts a write, and a direct read from C returns its old value. Scenario 02 is a separate deterministic exercise about retries adding work to a slow service's queue.
 
-This is a teaching model, not a distributed database, a consensus protocol, or a claim about how every partitioned system behaves. Its assumptions and exclusions are documented in [docs/SCENARIO.md](docs/SCENARIO.md).
+These are teaching models, not a distributed database, a consensus protocol, or claims about how every system behaves. Their assumptions and exclusions are documented in [docs/SCENARIO.md](docs/SCENARIO.md) and [docs/SCENARIO-02.md](docs/SCENARIO-02.md).
 
 ## Run locally
 
@@ -13,7 +13,7 @@ npm test
 npm start
 ```
 
-Open <http://127.0.0.1:4173/> for Scenario 01. The landing page is at <http://127.0.0.1:4173/home/> and the project overview is at <http://127.0.0.1:4173/about/>. The old `/scenario/` address redirects to the scenario start. The local server binds only to the loopback interface.
+Open <http://127.0.0.1:4173/> for Scenario 01 and <http://127.0.0.1:4173/retry-storm/> for Scenario 02. The landing page is at <http://127.0.0.1:4173/home/> and the project overview is at <http://127.0.0.1:4173/about/>. The old `/scenario/` address redirects to Scenario 01. The local server binds only to the loopback interface.
 
 ## Build for production
 
@@ -43,12 +43,13 @@ The prediction and confidence are held only in page memory and do not affect the
 - `tests/` — focused tests for the deterministic scenario
 - `scripts/` — the dependency-free build and local development server
 - `.github/workflows/pages.yml` — GitHub Pages deployment
-- `docs/SCENARIO.md` — model rules, exact sequence, and limitations
+- `docs/SCENARIO.md`, `docs/SCENARIO-02.md` — model rules, exact sequences, and limitations
 - `docs/PROJECT_GUIDE.md` — verification and responsible next steps
+- `docs/product-vision.md` — product purpose, scenario rubric, and future ideas
 - `AGENTS.md` — implementation guidance for coding agents and contributors
 
 ## Development
 
 `npm test` runs the model tests with Node's built-in test runner. `npm start` serves the static site at `127.0.0.1:4173`. `npm run build` produces the production site in `dist/`. No runtime or build dependencies are needed.
 
-Before expanding the exercise, preserve its deterministic behavior and update both the scenario documentation and tests. See [AGENTS.md](AGENTS.md) for contribution constraints and [docs/PROJECT_GUIDE.md](docs/PROJECT_GUIDE.md) for validation and feedback guidance.
+Preserve each exercise's deterministic behavior and update its scenario documentation and focused tests when changing it. See [AGENTS.md](AGENTS.md) for contribution constraints and [docs/PROJECT_GUIDE.md](docs/PROJECT_GUIDE.md) for validation and feedback guidance.

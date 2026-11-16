@@ -14,10 +14,15 @@ const files = new Map([
   ["/about/index.html", ["about/index.html", "text/html; charset=utf-8"]],
   ["/scenario/", ["scenario/index.html", "text/html; charset=utf-8"]],
   ["/scenario/index.html", ["scenario/index.html", "text/html; charset=utf-8"]],
+  ["/retry-storm/", ["retry-storm/index.html", "text/html; charset=utf-8"]],
+  ["/retry-storm/index.html", ["retry-storm/index.html", "text/html; charset=utf-8"]],
   ["/styles.css", ["styles.css", "text/css; charset=utf-8"]],
   ["/src/app.js", ["src/app.js", "text/javascript; charset=utf-8"]],
   ["/src/model.js", ["src/model.js", "text/javascript; charset=utf-8"]],
+  ["/src/retry-storm-app.js", ["src/retry-storm-app.js", "text/javascript; charset=utf-8"]],
+  ["/src/retry-storm-model.js", ["src/retry-storm-model.js", "text/javascript; charset=utf-8"]],
   ["/docs/SCENARIO.md", ["../docs/SCENARIO.md", "text/markdown; charset=utf-8"]],
+  ["/docs/SCENARIO-02.md", ["../docs/SCENARIO-02.md", "text/markdown; charset=utf-8"]],
 ]);
 
 if (!Number.isInteger(port) || port < 1 || port > 65535) {

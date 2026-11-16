@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Scenario 02: Retry Storm | Failure Lab</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module" src="../src/retry-storm-app.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand-link" href="../home/">Failure Lab</a>
+        <a href="../">Scenario 01</a>
+        <a href="../about/">About</a>
+      </nav>
+      <header class="page-header">
+        <p class="eyebrow">Failure Lab</p>
+        <h1>Scenario 02: Retry Storm</h1>
+        <p>A slow service. Three clients. Follow how retries change the queue.</p>
+      </header>
+
+      <section id="mission-briefing" class="panel mission-briefing" aria-labelledby="mission-heading">
+        <div class="mission-heading">
+          <div>
+            <p class="phase-label">Mission briefing</p>
+            <h2 id="mission-heading" tabindex="-1">The Retry Queue</h2>
+          </div>
+          <ul class="mission-meta" aria-label="Scenario details">
+            <li><span>Difficulty</span><strong>Beginner</strong></li>
+            <li><span>Time</span><strong>3-5 minutes</strong></li>
+          </ul>
+        </div>
+
+        <div class="mission-story">
+          <p class="mission-lead">You are investigating a service that is falling behind.</p>
+          <p>Three requests arrive just as the service slows down. Clients that do not get a response retry, but their original attempts are still waiting. How much work will remain in the queue?</p>
+        </div>
+
+        <section aria-labelledby="incident-heading">
+          <h3 id="incident-heading" class="subsection-heading">Incident snapshot</h3>
+          <div class="incident-snapshot">
+            <div><span>Service health</span><strong>Degraded</strong></div>
+            <div><span>Slow capacity</span><strong>1 attempt per round</strong></div>
+            <div><span>Original requests</span><strong>3</strong></div>
+            <div><span>Retry limit</span><strong>2 per client</strong></div>
+          </div>
+        </section>
+
+        <p class="mission-goal"><strong>Investigation goal</strong> Predict how many attempts remain queued after four service rounds.</p>
+
+        <div class="briefing-details">
+          <section aria-labelledby="objectives-heading">
+            <h3 id="objectives-heading">Learning objectives</h3>
+            <ul class="check-list">
+              <li><span aria-hidden="true">✓</span>Timeouts do not cancel queued work</li>
+              <li><span aria-hidden="true">✓</span>Retries add attempts to the queue</li>
+              <li><span aria-hidden="true">✓</span>Service capacity limits progress</li>
+              <li><span aria-hidden="true">✓</span>Bounded example, not a universal rule</li>
+            </ul>
+          </section>
+          <aside class="model-note" aria-labelledby="model-note-heading">
+            <h3 id="model-note-heading">Before you begin</h3>
+            <p>This fixed teaching model uses a FIFO queue and at most two retries per client. Other systems may cancel, deduplicate, back off, or handle retries differently.</p>
+          </aside>
+        </div>
+
+        <button id="start-button" type="button">Start Scenario</button>
+      </section>
+
+      <section id="prediction-panel" class="panel phase-panel" aria-labelledby="prediction-heading" hidden>
+        <p class="phase-label">Phase 2 · Prediction</p>
+        <h2 id="prediction-heading" tabindex="-1">Make your call</h2>
+        <p>How many attempts will still be waiting after four service rounds?</p>
+        <fieldset id="prediction-options">
+          <legend>Expected queue size</legend>
+          <label class="choice">
+            <input type="radio" name="prediction" value="0">
+            <span><strong>0</strong> attempts</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="prediction" value="1">
+            <span><strong>1</strong> attempt</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="prediction" value="2">
+            <span><strong>2</strong> attempts</span>
+          </label>
+        </fieldset>
+        <fieldset id="confidence-options">
+          <legend>How confident are you?</legend>
+          <label class="confidence-choice">
+            <input type="radio" name="confidence" value="guessing" checked>
+            <span>Guessing</span>
+          </label>
+          <label class="confidence-choice">
+            <input type="radio" name="confidence" value="pretty-sure">
+            <span>Pretty sure</span>
+          </label>
+          <label class="confidence-choice">
+            <input type="radio" name="confidence" value="extremely-confident">
+            <span>Extremely confident</span>
+          </label>
+        </fieldset>
+        <button id="lock-button" type="button" disabled>Lock In Prediction</button>
+      </section>
+
+      <section id="playback-panel" class="panel phase-panel" aria-labelledby="playback-heading" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="phase-label">Phase 3 · Timeline playback</p>
+            <h2 id="playback-heading" tabindex="-1">Follow the incident</h2>
+          </div>
+          <p id="step-status" class="status-tag" role="status">Ready for event 1 of 5</p>
+        </div>
+
+        <section class="service-stage" aria-labelledby="service-heading">
+          <div class="section-heading">
+            <h3 id="service-heading">Service and queue</h3>
+            <p id="service-capacity" class="status-tag">3 attempts per round</p>
+          </div>
+          <dl class="service-metrics">
+            <div><dt>Attempts accepted</dt><dd id="accepted-attempts">0</dd></div>
+            <div><dt>Attempts completed</dt><dd id="completed-attempts">0</dd></div>
+            <div><dt>Queue</dt><dd id="queue-count">0 attempts waiting</dd></div>
+          </dl>
+          <h4>Waiting attempts, first in line first</h4>
+          <ol id="attempt-queue" class="attempt-queue" aria-live="polite"></ol>
+        </section>
+
+        <div class="timeline-heading">
+          <h3>Incident timeline</h3>
+          <div class="controls">
+            <button id="next-button" type="button" disabled>Next</button>
+            <button id="reset-button" class="secondary" type="button">Start over</button>
+          </div>
+        </div>
+        <ol id="event-timeline" class="event-timeline" aria-live="polite" aria-relevant="additions"></ol>
+      </section>
+
+      <section id="result-panel" class="panel phase-panel result-panel" aria-labelledby="result-heading" hidden>
+        <p class="phase-label">Investigation complete</p>
+        <h2 id="result-heading" tabindex="-1">Two attempts remain queued</h2>
+
+        <div class="result-banner">
+          <span>Waiting after four service rounds</span>
+          <strong id="result-count">2</strong>
+        </div>
+
+        <div class="result-grid">
+          <section class="result-card" aria-labelledby="prediction-result-heading">
+            <h3 id="prediction-result-heading">Your prediction</h3>
+            <p class="prediction-answer"><strong id="result-prediction">0</strong><span id="result-verdict">Incorrect</span></p>
+            <p>Confidence: <strong id="result-confidence">Guessing</strong></p>
+          </section>
+          <section class="result-card" aria-labelledby="why-heading">
+            <h3 id="why-heading">Why?</h3>
+            <p>The slowdown limited the service to one attempt per round. B and C timed out while their original attempts remained queued, so their retries added work instead of replacing it. The original C attempt completed only after C had already sent two retries.</p>
+          </section>
+        </div>
+
+        <aside class="key-lesson" aria-labelledby="key-lesson-heading">
+          <h3 id="key-lesson-heading">Key lesson</h3>
+          <p>A timeout does not cancel the original work; a retry can add load to a queue that's already falling behind.</p>
+          <p>This outcome follows only from this exercise's fixed capacity, FIFO order, timeout rule, and retry limit. Other systems may behave differently.</p>
+        </aside>
+
+        <section class="completion-card" aria-labelledby="completion-heading">
+          <h3 id="completion-heading">Scenario complete</h3>
+          <ul class="check-list">
+            <li><span aria-hidden="true">✓</span>6 attempts accepted</li>
+            <li><span aria-hidden="true">✓</span>4 attempts completed</li>
+            <li><span aria-hidden="true">✓</span>2 attempts still queued</li>
+            <li><span aria-hidden="true">✓</span>No original work was cancelled</li>
+          </ul>
+        </section>
+        <button id="replay-button" type="button">Replay Scenario</button>
+      </section>
+
+      <footer>
+        <p>
+          Teaching model only; retry behavior varies by system.
+          <a href="../docs/SCENARIO-02.md">Read the scenario rules</a>.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

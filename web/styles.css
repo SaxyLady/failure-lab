@@ -578,6 +578,69 @@ fieldset legend {
   background: #fbfcfe;
 }
 
+.service-stage {
+  margin: 1.2rem 0;
+  padding: 1rem;
+  border: 1px solid #e0e8f0;
+  border-radius: 0.85rem;
+  background: #fbfcfe;
+}
+
+.service-stage .section-heading h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.service-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.service-metrics div {
+  padding: 0.75rem;
+  border: 1px solid #dce6ef;
+  border-radius: 0.7rem;
+  background: #fff;
+}
+
+.service-metrics dt {
+  color: #536276;
+  font-size: 0.88rem;
+}
+
+.service-metrics dd {
+  margin: 0.3rem 0 0;
+  color: #213b60;
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.service-stage h4 {
+  margin: 1.1rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.attempt-queue {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.attempt-queue li {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #dfe7ef;
+  border-radius: 0.55rem;
+  background: #fff;
+}
+
+.attempt-queue li::marker {
+  color: #355a85;
+  font-weight: 750;
+}
+
 .replica-stage .section-heading h3 {
   margin: 0;
   font-size: 1rem;
@@ -864,6 +927,14 @@ fieldset legend {
 
   .replica-stage {
     padding: 0.75rem;
+  }
+
+  .service-stage {
+    padding: 0.75rem;
+  }
+
+  .service-metrics {
+    grid-template-columns: 1fr;
   }
 }
 
