@@ -1,0 +1,14 @@
+{
+  "name": "distributed-systems-failure-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local, deterministic browser exercise for learning replication behavior",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node --test"
+  }
+}
