@@ -19,6 +19,8 @@
 
 - Prefer browser and Node.js built-ins; this fixed exercise does not need runtime or test dependencies.
 - Keep the development server bound to `127.0.0.1` and limited to the app and scenario's known static files.
+- Use relative asset and page links so the production site works beneath the GitHub Pages repository path.
+- Keep the production build static and limited to `web/` plus the published scenario specification.
 - Make controls keyboard-operable and ensure meaning is conveyed by text, not color alone.
 - Avoid animation and unnecessary abstractions.
 

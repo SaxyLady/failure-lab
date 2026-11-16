@@ -4,199 +4,46 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="referrer" content="no-referrer">
-    <title>Failure Lab: The Isolated Replica</title>
-    <link rel="stylesheet" href="/styles.css">
-    <script type="module" src="/src/app.js"></script>
+    <title>Failure Lab | Learn from distributed systems failures</title>
+    <meta name="description" content="A short, hands-on investigation into replication, network partitions, and stale reads.">
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <main class="page">
-      <header class="page-header">
-        <p class="eyebrow">Failure Lab</p>
-        <h1>Scenario 01: The Isolated Replica</h1>
-        <p>A customer report. Three replicas. Follow the evidence.</p>
-      </header>
+    <main class="page landing-page">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand-link" href="./">Failure Lab</a>
+        <a href="./about/">About</a>
+      </nav>
 
-      <section id="mission-briefing" class="panel mission-briefing" aria-labelledby="mission-heading">
-        <div class="mission-heading">
-          <div>
-            <p class="phase-label">Mission briefing</p>
-            <h2 id="mission-heading" tabindex="-1">The Isolated Replica</h2>
-          </div>
-          <ul class="mission-meta" aria-label="Scenario details">
-            <li><span>Difficulty</span><strong>Beginner</strong></li>
-            <li><span>Time</span><strong>3-5 minutes</strong></li>
-          </ul>
-        </div>
-
-        <div class="mission-story">
-          <p class="mission-lead">You are troubleshooting a distributed service.</p>
-          <p>Three replicas store the same value. A network issue isolates one replica. Moments later, a write occurs. A customer reads from the isolated node. Will they see the latest value?</p>
-        </div>
-
-        <section aria-labelledby="incident-heading">
-          <h3 id="incident-heading" class="subsection-heading">Alert status</h3>
-          <div class="incident-snapshot">
-            <div><span>Customer impact</span><strong>Low</strong></div>
-            <div><span>Service health</span><strong>Degraded</strong></div>
-            <div><span>Replicas</span><strong>3</strong></div>
-            <div><span>Known issues</span><strong>None</strong></div>
-          </div>
-        </section>
-
-        <p class="mission-goal"><strong>Investigation goal</strong> Determine what a customer reading from an isolated replica will observe.</p>
-
-        <div class="briefing-details">
-          <section aria-labelledby="objectives-heading">
-            <h3 id="objectives-heading">Learning objectives</h3>
-            <ul class="check-list">
-              <li><span aria-hidden="true">✓</span>Network partitions</li>
-              <li><span aria-hidden="true">✓</span>Replica consistency</li>
-              <li><span aria-hidden="true">✓</span>Local acknowledgements</li>
-              <li><span aria-hidden="true">✓</span>Stale reads</li>
-            </ul>
-          </section>
-          <aside class="model-note" aria-labelledby="model-note-heading">
-            <h3 id="model-note-heading">Before you begin</h3>
-            <p>This is a simplified teaching simulation, not a model of any specific database. Different systems make different tradeoffs.</p>
-          </aside>
-        </div>
-
-        <button id="start-button" type="button">Start Scenario</button>
+      <section class="landing-hero" aria-labelledby="landing-heading">
+        <p class="eyebrow">A hands-on learning lab</p>
+        <h1 id="landing-heading">Understand what fails—and why.</h1>
+        <p class="hero-copy">Investigate distributed-systems behavior in a short, guided browser exercise—no real outage or setup required.</p>
+        <a class="button-link" href="./scenario/">Start Scenario 01</a>
+        <p class="hero-meta">Beginner <span aria-hidden="true">·</span> 3-5 minutes <span aria-hidden="true">·</span> Runs in your browser</p>
       </section>
 
-      <section id="prediction-panel" class="panel phase-panel" aria-labelledby="prediction-heading" hidden>
-        <p class="phase-label">Phase 2 · Prediction</p>
-        <h2 id="prediction-heading" tabindex="-1">Make your call</h2>
-        <p>A customer reads from Replica C. What do you expect to happen?</p>
-        <fieldset id="prediction-options">
-          <legend>Expected result</legend>
-          <label class="choice">
-            <input type="radio" name="prediction" value="0">
-            <span>Receive <strong>0</strong></span>
-          </label>
-          <label class="choice">
-            <input type="radio" name="prediction" value="1">
-            <span>Receive <strong>1</strong></span>
-          </label>
-        </fieldset>
-        <fieldset id="confidence-options">
-          <legend>How confident are you?</legend>
-          <label class="confidence-choice">
-            <input type="radio" name="confidence" value="guessing" checked>
-            <span>Guessing</span>
-          </label>
-          <label class="confidence-choice">
-            <input type="radio" name="confidence" value="pretty-sure">
-            <span>Pretty sure</span>
-          </label>
-          <label class="confidence-choice">
-            <input type="radio" name="confidence" value="extremely-confident">
-            <span>Extremely confident</span>
-          </label>
-        </fieldset>
-        <button id="lock-button" type="button" disabled>Lock In Prediction</button>
+      <section class="panel landing-scenario" aria-labelledby="scenario-heading">
+        <div>
+          <p class="phase-label">Scenario 01</p>
+          <h2 id="scenario-heading">The Isolated Replica</h2>
+          <p>A customer reads from one replica after a network partition and a write. Predict what they will see, then follow the evidence.</p>
+        </div>
+        <a class="text-link" href="./scenario/">Enter the investigation <span aria-hidden="true">→</span></a>
       </section>
 
-      <section id="playback-panel" class="panel phase-panel" aria-labelledby="playback-heading" hidden>
-        <div class="section-heading">
-          <div>
-            <p class="phase-label">Phase 3 · Timeline playback</p>
-            <h2 id="playback-heading" tabindex="-1">Follow the incident</h2>
-          </div>
-          <p id="step-status" class="status-tag" role="status">Ready for event 1 of 5</p>
-        </div>
-
-        <section class="replica-stage" aria-labelledby="replicas-heading">
-          <div class="section-heading">
-            <h3 id="replicas-heading">Current replica values</h3>
-            <p id="partition-status" class="status-tag">All links connected</p>
-          </div>
-          <ul class="replica-list" aria-label="Current node values">
-            <li class="replica">
-              <h4>Replica A</h4>
-              <p>Value: <output id="value-a">0</output></p>
-            </li>
-            <li class="replica">
-              <h4>Replica B</h4>
-              <p>Value: <output id="value-b">0</output></p>
-            </li>
-            <li class="replica" id="replica-c">
-              <h4>Replica C</h4>
-              <p>Value: <output id="value-c">0</output></p>
-              <p id="c-status">Connected</p>
-            </li>
-          </ul>
-          <ul class="link-list" aria-label="Network connection status">
-            <li id="link-ab">A ↔ B: Connected</li>
-            <li id="link-ac">A ↔ C: Connected</li>
-            <li id="link-bc">B ↔ C: Connected</li>
-          </ul>
-        </section>
-
-        <section id="message-board" class="message-board" aria-labelledby="message-heading" hidden>
-          <h3 id="message-heading">Replication messages</h3>
-          <ul>
-            <li id="message-ab"><span>A → B</span><strong>Pending</strong></li>
-            <li id="message-ac"><span>A → C</span><strong>Pending</strong></li>
-          </ul>
-        </section>
-
-        <p id="reflection-prompt" class="reflection-prompt" hidden><strong>Pause and consider:</strong> Have all replicas seen the write?</p>
-
-        <div class="timeline-heading">
-          <h3>Incident timeline</h3>
-          <div class="controls">
-            <button id="next-button" type="button" disabled>Next</button>
-            <button id="reset-button" class="secondary" type="button">Start over</button>
-          </div>
-        </div>
-        <ol id="event-timeline" class="event-timeline" aria-live="polite" aria-relevant="additions"></ol>
-      </section>
-
-      <section id="result-panel" class="panel phase-panel result-panel" aria-labelledby="result-heading" hidden>
-        <p class="phase-label">Investigation complete</p>
-        <h2 id="result-heading" tabindex="-1">The customer read Replica C</h2>
-
-        <div class="result-banner">
-          <span>Returned</span>
-          <strong id="result-value">0</strong>
-        </div>
-
-        <div class="result-grid">
-          <section class="result-card" aria-labelledby="prediction-result-heading">
-            <h3 id="prediction-result-heading">Your prediction</h3>
-            <p class="prediction-answer"><strong id="result-prediction">1</strong><span id="result-verdict">Incorrect</span></p>
-            <p>Confidence: <strong id="result-confidence">Guessing</strong></p>
-          </section>
-          <section class="result-card" aria-labelledby="why-heading">
-            <h3 id="why-heading">Why?</h3>
-            <p>Replica A acknowledged the write immediately, even though B and C had not applied it. The A-to-C message was dropped at the blocked link and was not retried. C still held 0, so the customer read the old value despite A acknowledging 1.</p>
-          </section>
-        </div>
-
-        <aside class="key-lesson" aria-labelledby="key-lesson-heading">
-          <h3 id="key-lesson-heading">Key lesson</h3>
-          <p>An acknowledgement does not mean every replica has applied the write.</p>
-          <p>This result follows only from this exercise's rules. Other systems may reject or block a read, or use different replication behavior.</p>
-        </aside>
-
-        <section class="completion-card" aria-labelledby="completion-heading">
-          <h3 id="completion-heading">Scenario complete</h3>
-          <ul class="check-list">
-            <li><span aria-hidden="true">✓</span>Network partition</li>
-            <li><span aria-hidden="true">✓</span>Replica isolation</li>
-            <li><span aria-hidden="true">✓</span>Local acknowledgement</li>
-            <li><span aria-hidden="true">✓</span>Stale read</li>
-          </ul>
-        </section>
-        <button id="replay-button" type="button">Replay Scenario</button>
+      <section class="landing-points" aria-label="What you will explore">
+        <h2>One incident. A few important lessons.</h2>
+        <ul class="check-list">
+          <li><span aria-hidden="true">✓</span>Network partitions</li>
+          <li><span aria-hidden="true">✓</span>Replica consistency</li>
+          <li><span aria-hidden="true">✓</span>Local acknowledgements</li>
+          <li><span aria-hidden="true">✓</span>Stale reads</li>
+        </ul>
       </section>
 
       <footer>
-        <p>
-          Teaching model only; not a real database or a guarantee about all
-          partitioned systems. <a href="/docs/SCENARIO.md">Read the scenario rules</a>.
-        </p>
+        <p>A simplified teaching model, not a guarantee about every database. <a href="./about/">About Failure Lab</a></p>
       </footer>
     </main>
   </body>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>About | Failure Lab</title>
+    <meta name="description" content="About the scope and assumptions behind Failure Lab.">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <main class="page about-page">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand-link" href="../">Failure Lab</a>
+        <a href="../scenario/">Scenario 01</a>
+      </nav>
+
+      <header class="page-header">
+        <p class="eyebrow">About the project</p>
+        <h1>Learn by investigating.</h1>
+        <p>Failure Lab is a small collection of browser-based exercises about distributed systems behavior and operational tradeoffs.</p>
+      </header>
+
+      <section class="panel about-section" aria-labelledby="purpose-heading">
+        <p class="phase-label">The purpose</p>
+        <h2 id="purpose-heading">Understand the “why,” not just the outcome.</h2>
+        <p>Scenario 01 follows a write across three replicas during a network partition. You make a prediction, inspect each event, and see why a direct read from the isolated replica returns its older value.</p>
+      </section>
+
+      <section class="panel about-section" aria-labelledby="model-heading">
+        <p class="phase-label">A teaching model</p>
+        <h2 id="model-heading">Explicit rules. Deliberate limits.</h2>
+        <ul class="about-list">
+          <li>Writes are acknowledged locally at A; acknowledgement does not mean every replica has applied the write.</li>
+          <li>Reads go directly to the chosen replica.</li>
+          <li>A message blocked by the partition is dropped and is not retried.</li>
+        </ul>
+        <p>This is not a real database, a consensus protocol, or a claim about how every partitioned system behaves. Other systems may reject or block reads or use different replication rules.</p>
+        <a href="../docs/SCENARIO.md">Read the complete scenario specification</a>
+      </section>
+
+      <section class="panel about-section" aria-labelledby="privacy-heading">
+        <p class="phase-label">Simple by design</p>
+        <h2 id="privacy-heading">No account. No saved learner data.</h2>
+        <p>The exercise runs in your browser. Predictions and confidence stay in page memory; the app has no sign-in, backend, telemetry, or external page requests.</p>
+      </section>
+
+      <a class="button-link" href="../scenario/">Start Scenario 01</a>
+
+      <footer>
+        <p><a href="../">Back to Failure Lab</a></p>
+      </footer>
+    </main>
+  </body>
+</html>

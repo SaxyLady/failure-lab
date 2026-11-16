@@ -2,7 +2,7 @@
 
 ## Current baseline
 
-The repository contains one deterministic, five-action browser exercise with a mission briefing, prediction, timeline playback, and result reveal. It uses a dependency-free local server and focused model tests. There is no sign-in, backend, cloud resource, telemetry, external page request, or persisted learner state.
+The repository contains a landing page, an about page, and one deterministic, five-action browser exercise with a mission briefing, prediction, timeline playback, and result reveal. A dependency-free build produces a static site for GitHub Pages. There is no sign-in, backend, telemetry, external page request, or persisted learner state.
 
 ## Definition of done
 
